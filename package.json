@@ -1,0 +1,21 @@
+{
+	"name": "compute-starter-kit-javascript-default",
+	"version": "0.2.0",
+	"main": "src/index.js",
+	"type": "module",
+	"engines": {
+		"node": "^16"
+	},
+	"devDependencies": {
+		"esbuild": "^0.14.10"
+	},
+	"dependencies": {
+		"@fastly/js-compute": "^0.2.1"
+	},
+	"scripts": {
+		"bundle": "esbuild src/index.ts --bundle --minify --platform=node --target=es2020,chrome90 --loader:.html=text --outfile=bin/index.js",
+		"build": "pnpm run bundle && js-compute-runtime --skip-pkg bin/index.js bin/main.wasm",
+		"deploy": "npm run build && fastly compute deploy",
+		"watch": "fastly compute serve --watch"
+	}
+}
